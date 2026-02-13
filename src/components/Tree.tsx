@@ -38,27 +38,26 @@ export default function Tree() {
   const [founders, setFounders] = useState<Founder[]>(FALLBACK_FOUNDERS);
   const [loading, setLoading] = useState(true);
 
-  // Fetch from Supabase if available
+  // Read from window.__founders (pre-fetched by Counter inline script) or use fallback
   useEffect(() => {
-    const url = import.meta.env.PUBLIC_SUPABASE_URL;
-    const key = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+    const check = () => {
+      if ((window as any).__founders && (window as any).__founders.length > 0) {
+        setFounders((window as any).__founders);
+        setLoading(false);
+        return true;
+      }
+      return false;
+    };
 
-    if (url && key) {
-      import('@supabase/supabase-js').then(({ createClient }) => {
-        const client = createClient(url, key);
-        client
-          .from('founders')
-          .select('*')
-          .eq('verified', true)
-          .then(({ data }) => {
-            if (data && data.length > 0) {
-              setFounders(data);
-            }
-            setLoading(false);
-          });
-      });
-    } else {
-      setLoading(false);
+    if (!check()) {
+      // Counter script may still be fetching — poll briefly, then fall back
+      let attempts = 0;
+      const interval = setInterval(() => {
+        if (check() || ++attempts > 20) {
+          clearInterval(interval);
+          setLoading(false);
+        }
+      }, 100);
     }
   }, []);
 

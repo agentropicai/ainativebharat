@@ -31,16 +31,17 @@
 
 <script is:inline>
   (async function() {
-    const url = 'https://vovvzpyjrfrvogftvrth.supabase.co/rest/v1/founders?verified=eq.true&select=id';
-    const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZvdnZ6cHlqcmZydm9nZnR2cnRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkyMjg5MDIsImV4cCI6MjA1NDgwNDkwMn0.JfsgPqCcY5XUYqAN2Vo9RA-p-4-Yht8qd_j3gT1MK1Q';
+    var url = 'https://vovvzpyjrfrvogftvrth.supabase.co/rest/v1/founders?select=*&verified=eq.true';
+    var key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZvdnZ6cHlqcmZydm9nZnR2cnRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA5ODg2OTksImV4cCI6MjA4NjU2NDY5OX0.JfsgPqCcY5XUYqAN2Vo9RA-p-4-Yht8qd_j3gT1MK1Q';
 
     try {
-      const res = await fetch(url, {
+      var res = await fetch(url, {
         headers: { 'apikey': key, 'Authorization': 'Bearer ' + key }
       });
-      const data = await res.json();
-      const count = data.length;
-      const remaining = (1_400_000_000 - count).toLocaleString('en-IN');
+      var data = await res.json();
+      window.__founders = data;
+      var count = data.length;
+      var remaining = (1400000000 - count).toLocaleString('en-IN');
 
       document.getElementById('count-number').textContent = count;
       document.getElementById('remaining-text').textContent = remaining + ' to go.';
