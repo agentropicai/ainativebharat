@@ -9,7 +9,7 @@ export default function JoinForm() {
     const message = encodeURIComponent(
       `Hi, I'm ${name}. I want to become AI Native. #AINativeBharat`
     );
-    window.open(`https://wa.me/919001236554?text=${message}`, '_blank');
+    window.open(`https://wa.me/919833018465?text=${message}`, '_blank');
     setSubmitted(true);
   };
 
