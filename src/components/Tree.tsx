@@ -249,16 +249,7 @@ export default function Tree() {
   }, [founders, loading]);
 
   return (
-    <section id="tree" className="py-16 px-6">
-      <h2
-        className="text-center font-heading text-3xl md:text-4xl font-bold text-white mb-4"
-      >
-        The Tree
-      </h2>
-      <p className="text-center text-subtle mb-8 text-sm">
-        Click a node to see their agents. Drag to rearrange. Scroll to zoom.
-      </p>
-
+    <section id="tree" className="py-12 px-6">
       <div ref={containerRef} className="relative w-full max-w-5xl mx-auto bg-dark-card rounded-xl border border-dark-border overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center h-[500px]">
@@ -318,7 +309,7 @@ export default function Tree() {
 
       {/* Legend */}
       <div className="flex flex-wrap justify-center gap-4 mt-6 text-xs text-muted">
-        {['Root', 'Gen 1', 'Gen 2', 'Gen 3'].map((label, i) => (
+        {['Started it', 'Enabled by them', 'Enabled by those', 'And so on'].map((label, i) => (
           <div key={i} className="flex items-center gap-1.5">
             <span
               className="w-2.5 h-2.5 rounded-full inline-block"

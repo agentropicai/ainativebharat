@@ -3,17 +3,15 @@ import Base from '../layouts/Base.astro';
 import Counter from '../components/Counter.astro';
 import Tree from '../components/Tree';
 import Definition from '../components/Definition.astro';
-import HowItWorks from '../components/HowItWorks.astro';
 import JoinForm from '../components/JoinForm';
 import Pledge from '../components/Pledge.astro';
 ---
 
-<Base title="AI Native Bharat — The Movement">
+<Base title="AI Native Bharat">
   <main>
     <Counter />
-    <Tree client:load />
     <Definition />
-    <HowItWorks />
+    <Tree client:load />
     <JoinForm client:load />
     <Pledge />
   </main>
