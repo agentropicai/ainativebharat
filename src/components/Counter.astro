@@ -1,35 +1,18 @@
 ---
-import { supabase } from '../lib/supabase';
-
-let count = 2; // fallback
-
-if (supabase) {
-  const { count: dbCount, error } = await supabase
-    .from('founders')
-    .select('*', { count: 'exact', head: true })
-    .eq('verified', true);
-
-  if (!error && dbCount !== null) {
-    count = dbCount;
-  }
-}
-
-const remaining = (1_400_000_000 - count).toLocaleString('en-IN');
 ---
 
 <section id="counter" class="flex flex-col items-center justify-center min-h-screen px-6 text-center">
   <p class="text-subtle text-sm uppercase tracking-widest mb-8 font-medium">AI Native Bharat</p>
 
-  <h1 class="font-mono text-7xl md:text-9xl font-bold text-white tabular-nums leading-none">
-    {count}
+  <h1 id="count-number" class="font-mono text-7xl md:text-9xl font-bold text-white tabular-nums leading-none">
+    &ndash;
   </h1>
 
   <p class="text-2xl md:text-3xl text-subtle mt-4 font-heading">
     Indians are <span class="text-saffron font-semibold">AI Native</span>.
   </p>
 
-  <p class="text-lg text-muted mt-2 font-mono">
-    {remaining} to go.
+  <p id="remaining-text" class="text-lg text-muted mt-2 font-mono">
   </p>
 
   <p class="text-subtle mt-8 text-base max-w-md leading-relaxed">
@@ -45,3 +28,25 @@ const remaining = (1_400_000_000 - count).toLocaleString('en-IN');
     </svg>
   </a>
 </section>
+
+<script is:inline>
+  (async function() {
+    const url = 'https://vovvzpyjrfrvogftvrth.supabase.co/rest/v1/founders?verified=eq.true&select=id';
+    const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZvdnZ6cHlqcmZydm9nZnR2cnRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkyMjg5MDIsImV4cCI6MjA1NDgwNDkwMn0.JfsgPqCcY5XUYqAN2Vo9RA-p-4-Yht8qd_j3gT1MK1Q';
+
+    try {
+      const res = await fetch(url, {
+        headers: { 'apikey': key, 'Authorization': 'Bearer ' + key }
+      });
+      const data = await res.json();
+      const count = data.length;
+      const remaining = (1_400_000_000 - count).toLocaleString('en-IN');
+
+      document.getElementById('count-number').textContent = count;
+      document.getElementById('remaining-text').textContent = remaining + ' to go.';
+    } catch (e) {
+      document.getElementById('count-number').textContent = '2';
+      document.getElementById('remaining-text').textContent = '1,39,99,99,998 to go.';
+    }
+  })();
+</script>
