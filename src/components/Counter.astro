@@ -1,0 +1,44 @@
+---
+import { supabase } from '../lib/supabase';
+
+let count = 23; // fallback
+
+if (supabase) {
+  const { count: dbCount, error } = await supabase
+    .from('founders')
+    .select('*', { count: 'exact', head: true })
+    .eq('verified', true);
+
+  if (!error && dbCount !== null) {
+    count = dbCount;
+  }
+}
+
+const remaining = (1_400_000_000 - count).toLocaleString('en-IN');
+---
+
+<section id="counter" class="flex flex-col items-center justify-center min-h-screen px-6 text-center">
+  <p class="text-subtle text-sm uppercase tracking-widest mb-6 font-medium">AI Native Bharat</p>
+
+  <h1 class="font-mono text-7xl md:text-9xl font-bold text-white tabular-nums leading-none">
+    {count}
+  </h1>
+
+  <p class="text-2xl md:text-3xl text-subtle mt-4 font-heading">
+    founders are <span class="text-saffron font-semibold">AI Native</span>.
+  </p>
+
+  <p class="text-lg text-muted mt-2 font-mono">
+    {remaining} to go.
+  </p>
+
+  <a
+    href="#tree"
+    class="mt-16 text-saffron hover:text-saffron-light transition-colors text-sm flex flex-col items-center gap-2 group"
+  >
+    <span>See the tree</span>
+    <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  </a>
+</section>
