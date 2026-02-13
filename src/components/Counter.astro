@@ -1,7 +1,7 @@
 ---
 import { supabase } from '../lib/supabase';
 
-let count = 23; // fallback
+let count = 2; // fallback
 
 if (supabase) {
   const { count: dbCount, error } = await supabase
